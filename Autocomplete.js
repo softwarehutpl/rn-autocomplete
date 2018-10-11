@@ -46,6 +46,7 @@ class Autocomplete extends Component {
   }
 
   setItems = () => {
+    if (this.state.inputValue.length >= this.props.minChars) {
     const stateData = this.state.inputValue;
     this.props.dataSourceFn(this.state.inputValue)
       .then((itemsData) => {
@@ -57,6 +58,7 @@ class Autocomplete extends Component {
         const newItemsArray = itemsArray.slice(0, this.props.hintsNo);
         this.setState({ items: newItemsArray });
       });
+    }
   }
 
   selectItem = (item) => {
@@ -85,7 +87,7 @@ class Autocomplete extends Component {
 
   render() {
     let items = this.state.items;
-    if(this.state.inputValue.length > this.props.minChars) {
+    if(this.state.inputValue.length >= this.props.minChars) {
       if (Array.isArray(items) && items.length > 0) {
         items = items.map(item => {
           return <Text
