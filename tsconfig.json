@@ -8,8 +8,5 @@
     ],                             /* Specify library files to be included in the compilation. */
     "jsx": "react-native",                           /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     "outFile": "./dist/index.js",
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }
