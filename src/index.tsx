@@ -1,16 +1,29 @@
-import React, {Component} from 'react';
-import {TextInput, Text, View, Modal, TouchableOpacity, Alert, Dimensions } from 'react-native';
-import Svg,{
-  Path,
-  Line
-} from 'react-native-svg';
-import {StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput, Text, View, Modal, TouchableOpacity, Dimensions } from 'react-native';
+import Svg,{ Path, Line } from 'react-native-svg';
+import { StyleSheet } from 'react-native';
 import { debounce } from 'lodash';
 
 const { width, height } = Dimensions.get('window');
 
-class Autocomplete extends Component {
-  constructor(props) {
+interface State {
+  inputValue?: string,
+  selectedItem?: Object,
+  items?: Array<Object>,
+  modalVisible: boolean,
+}
+
+interface Props {
+  dataSourceFn: Function,
+  onSelect: Function,
+  selectedItem?: Object,
+  labelField: string,
+  minChars: number,
+  hintsNo: number,
+}
+
+class Autocomplete extends Component<State, Props> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       inputValue: '',
@@ -46,7 +59,6 @@ class Autocomplete extends Component {
   }
 
   setItems = () => {
-    if (this.state.inputValue.length >= this.props.minChars) {
     const stateData = this.state.inputValue;
     this.props.dataSourceFn(this.state.inputValue)
       .then((itemsData) => {
@@ -58,7 +70,6 @@ class Autocomplete extends Component {
         const newItemsArray = itemsArray.slice(0, this.props.hintsNo);
         this.setState({ items: newItemsArray });
       });
-    }
   }
 
   selectItem = (item) => {
@@ -87,7 +98,7 @@ class Autocomplete extends Component {
 
   render() {
     let items = this.state.items;
-    if(this.state.inputValue.length >= this.props.minChars) {
+    if(this.state.inputValue.length > this.props.minChars) {
       if (Array.isArray(items) && items.length > 0) {
         items = items.map(item => {
           return <Text
@@ -110,9 +121,7 @@ class Autocomplete extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}>
+          >
           <View style={styles.backBtn}>
             <TouchableOpacity onPress={() => this.toggleModal()}>
               <Svg height="32" width="32">

@@ -1,0 +1,31 @@
+{
+  "name": "rn-autocomplete",
+  "version": "0.0.1",
+  "main": "src/index.js", // ?
+  "private": true,
+  "scripts": {
+    "build": "tsc -p ./", // ?
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "lodash.debounce": "^4.0.8",
+    "react": "16.5.0",
+    "react-native": "0.57.1",
+    "react-native-root-modal": "^3.1.1",
+    "react-native-svg": "^7.0.3"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.46.0",
+    "react-test-renderer": "16.5.0"
+  },
+  "peerDependencies": {
+    "react-native": "0.57.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
